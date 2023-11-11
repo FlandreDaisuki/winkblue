@@ -1,0 +1,9 @@
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.validate": [
+    "javascript"
+  ],
+  "cSpell.words": [
+    "winkblue"
+  ]
+}

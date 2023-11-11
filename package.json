@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "type": "module",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rollup src/index.js --format iife --dir dist --name winkblue",
     "release": "bumpp && pnpm publish"

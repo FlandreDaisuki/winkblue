@@ -3,10 +3,10 @@
   "version": "0.0.2",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/winkblue.js",
   "scripts": {
-    "build": "rollup src/index.js --format iife --dir dist --name winkblue",
-    "release": "bumpp && pnpm publish"
+    "build": "rollup src/index.js --format iife --file dist/winkblue.js --name winkblue",
+    "release": "bumpp && pnpm build && pnpm publish"
   },
   "keywords": [],
   "author": "FlandreDaisuki <vbnm123c+github@gmail.com>",

@@ -1,7 +1,7 @@
 {
   "name": "winkblue",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "author": "FlandreDaisuki <vbnm123c+github@gmail.com>",
   "license": "ISC",
@@ -14,7 +14,9 @@
   },
   "main": "./dist/winkblue.umd.js",
   "module": "./dist/winkblue.mjs",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "vite build",
     "release": "bumpp && pnpm build && pnpm publish"

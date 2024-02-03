@@ -11,7 +11,7 @@ export default {
       for (const el of Array.from(document.querySelectorAll(selector))) {
         if (el && !wk.has(el)) {
           wk.add(el);
-          return cb(el);
+          return setTimeout(() => cb(el), 0);
         }
       }
     });

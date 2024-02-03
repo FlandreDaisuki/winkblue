@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>winkblue playground</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+  ul.flex-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  ul.flex-list > li {
+    width: 100px;
+    height: 100px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    margin: 4px;
+  }
+  ul.flex-list > li.highlight { border: 1px solid red; }
+  ul.flex-list > li.text-highlight { font-size: 2rem; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <h1>Observe <code>li:nth-child(even)</code> by multiple instances</h1>
+  <p><a href="https://github.com/FlandreDaisuki/winkblue/blob/master/docs/play/multi-instance/index.html">view source code</a></p>
+  <div>
+    <button type="button" id="btn">Append a list item</button>
+  </div>
+  <main>
+    <h2>winkblue list</h2>
+    <ul id="winkblue-list" class="flex-list"></ul>
+    <h2>sentinel-js list</h2>
+    <ul id="sentinel-list" class="flex-list"></ul>
+  </main>
+  <script>
+  (() => {
+    const btnEl = document.getElementById('btn');
+    const flexListEls = Array.from(document.querySelectorAll('ul.flex-list'));
+    if(!btnEl || flexListEls.length === 0) { return; }
+
+    let i = 0;
+    btnEl.onclick = () => {
+      i += 1;
+      for (const flexListEl of flexListEls) {
+        flexListEl.insertAdjacentHTML('beforeend', `<li>${String(i).padStart(3, '0')}</li>`)
+      }
+    }
+  })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "winkblue1": "https://esm.sh/winkblue?t=1",
+        "sentinel1": "https://esm.sh/sentinel-js?t=1",
+        "winkblue2": "https://esm.sh/v135/winkblue@0.0.4/es2022/winkblue.mjs?t=2",
+        "sentinel2": "https://esm.sh/v135/sentinel-js@0.0.7/es2022/sentinel-js.mjs?t=2"
+      }
+    }
+  </script>
+  <script type="module">
+    import sentinel1 from 'sentinel1';
+    import sentinel2 from 'sentinel2';
+
+    sentinel1.on('ul#sentinel-list > li:nth-child(even)', (el) => {
+      el.classList.add('highlight');
+    });
+
+    sentinel2.on('ul#sentinel-list > li:nth-child(even)', (el) => {
+      el.classList.add('text-highlight');
+    });
+
+    console.log(`sentinel1 === sentinel2`, sentinel1 === sentinel2)
+  </script>
+  <script type="module">
+    import winkblue1 from 'winkblue1';
+    import winkblue2 from 'winkblue2';
+
+    winkblue1.on('ul#winkblue-list > li:nth-child(even)', (el) => {
+      el.classList.add('highlight');
+    });
+
+    winkblue2.on('ul#winkblue-list > li:nth-child(even)', (el) => {
+      el.classList.add('text-highlight');
+    });
+
+    console.log(`winkblue1 === winkblue2`, winkblue1 === winkblue2)
+  </script>
+</body>
+</html>

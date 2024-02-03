@@ -1,5 +1,3 @@
-// @ts-check
-
 const mem = Object.create(null);
 
 export default {

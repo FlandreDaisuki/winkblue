@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext", "Dom", "ES2023"],
+    "lib": ["ESNext", "Dom"],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -14,5 +14,6 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
+    "checkJs": true
   }
 }

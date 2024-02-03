@@ -1,20 +1,28 @@
 {
   "name": "winkblue",
+  "type": "module",
   "version": "0.0.3",
   "description": "",
-  "type": "module",
-  "main": "dist/winkblue.js",
-  "scripts": {
-    "build": "rollup src/index.js --format iife --file dist/winkblue.js --name winkblue",
-    "release": "bumpp && pnpm build && pnpm publish"
-  },
-  "keywords": [],
   "author": "FlandreDaisuki <vbnm123c+github@gmail.com>",
   "license": "ISC",
+  "keywords": [],
+  "exports": {
+    ".": {
+      "import": "./dist/winkblue.mjs",
+      "require": "./dist/winkblue.umd.js"
+    }
+  },
+  "main": "./dist/winkblue.umd.js",
+  "module": "./dist/winkblue.mjs",
+  "files": ["dist"],
+  "scripts": {
+    "build": "vite build",
+    "release": "bumpp && pnpm build && pnpm publish"
+  },
   "devDependencies": {
     "@flandredaisuki/eslint-config": "^0.1.2",
     "bumpp": "^9.2.0",
     "eslint": "^8.53.0",
-    "rollup": "^4.3.1"
+    "vite": "^5.0.12"
   }
 }

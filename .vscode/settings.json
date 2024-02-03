@@ -1,8 +1,12 @@
 {
   "eslint.experimental.useFlatConfig": true,
   "eslint.validate": [
-    "javascript"
+    "javascript",
+    "json"
   ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
   "cSpell.words": [
     "winkblue"
   ]

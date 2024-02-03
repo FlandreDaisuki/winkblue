@@ -1,5 +1,7 @@
 # winkblue
 
+[![NPM Version](https://img.shields.io/npm/v/winkblue)](https://www.npmjs.com/package/winkblue)
+
 An DOM element detector which API compatible to [sentinel-js](https://github.com/muicss/sentineljs)
 
 ## why?

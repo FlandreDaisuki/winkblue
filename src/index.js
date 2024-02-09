@@ -1,3 +1,4 @@
+/** @type {Record<string, Set<{cb: Function; mo: MutationObserver}>>} */
 const mem = Object.create(null);
 
 export default {
@@ -11,7 +12,7 @@ export default {
       for (const el of Array.from(document.querySelectorAll(selector))) {
         if (el && !wk.has(el)) {
           wk.add(el);
-          return setTimeout(() => cb(el), 0);
+          setTimeout(() => cb(el), 0);
         }
       }
     });
@@ -31,6 +32,8 @@ export default {
 
     if (cb) {
       const found = Array.from(rSet).find((r) => r.cb === cb);
+      if (!found) { return; }
+
       found.mo.disconnect();
       rSet.delete(found);
     }

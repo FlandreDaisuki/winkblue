@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>winkblue playground</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+  ul.flex-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  ul.flex-list > li {
+    width: 100px;
+    height: 100px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    margin: 4px;
+  }
+  </style>
+</head>
+<body>
+  <h1>Observe the same <code>li</code> DOM instance</h1>
+  <p><a href="https://github.com/FlandreDaisuki/winkblue/blob/master/docs/play/blink/index.html">view source code</a></p>
+  <div>
+    <button type="button" id="btn">Append a list item</button>
+  </div>
+  <main>
+    <h2>winkblue list</h2>
+    <ul id="winkblue-list" class="flex-list"></ul>
+    <h2>sentinel-js list</h2>
+    <ul id="sentinel-list" class="flex-list"></ul>
+  </main>
+  <script>
+  (() => {
+    const btnEl = document.getElementById('btn');
+    const winkblueListEl = document.getElementById('winkblue-list');
+    const sentinelListEl = document.getElementById('sentinel-list');
+    if(!btnEl || !winkblueListEl || !sentinelListEl) { return; }
+
+    winkblueListEl.insertAdjacentHTML('beforeend', `<li class="counter">0</li>`)
+    sentinelListEl.insertAdjacentHTML('beforeend', `<li class="counter">0</li>`)
+
+    const winkblueListItemEl = document.createElement('li');
+    winkblueListItemEl.textContent = 'Hello winkblue!';
+
+    const sentinelListItemEl = document.createElement('li');
+    sentinelListItemEl.textContent = 'Hello sentinel!';
+
+    btnEl.onclick = () => {
+      if(winkblueListEl.lastElementChild === winkblueListItemEl) {
+        winkblueListItemEl.remove();
+      } else {
+        winkblueListEl.appendChild(winkblueListItemEl);
+      }
+
+      if(sentinelListEl.lastElementChild === sentinelListItemEl) {
+        sentinelListItemEl.remove();
+      } else {
+        sentinelListEl.appendChild(sentinelListItemEl);
+      }
+    }
+  })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "winkblue": "https://esm.sh/winkblue",
+        "sentinel": "https://esm.sh/sentinel-js"
+      }
+    }
+  </script>
+  <script type="module">
+    import sentinel from 'sentinel';
+
+    sentinel.on('ul#sentinel-list > li:nth-child(2)', (el) => {
+      const t = Number(el.previousElementSibling.textContent);
+      el.previousElementSibling.textContent = t + 1
+    });
+  </script>
+  <script type="module">
+    import winkblue from 'winkblue';
+
+    winkblue.on('ul#winkblue-list > li:nth-child(2)', (el) => {
+      const t = Number(el.previousElementSibling.textContent);
+      el.previousElementSibling.textContent = t + 1
+    }, {memorize: false});
+  </script>
+</body>
+</html>

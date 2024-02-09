@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>winkblue playground</title>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <style>
+  ul.flex-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    margin: 0 auto;
+  }
+  ul.flex-list > li {
+    width: 100px;
+    height: 100px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    margin: 4px;
+  }
+  .fizz::after{ content: 'fizz'; color: fuchsia; }
+  .buzz::after{ content: 'buzz'; color: lightgreen; }
+  .fizz.buzz::after{ content: 'fizzbuzz'; color: aqua; }
+  /* cspell:ignore fizzbuzz */
+  </style>
+</head>
+<body>
+  <h1>Observe multiple <code>li</code> changes at once</h1>
+  <p><a href="https://github.com/FlandreDaisuki/winkblue/blob/master/docs/play/scattergun/index.html">view source code</a></p>
+  <div>
+    <button type="button" id="btn">Append a list item</button>
+  </div>
+  <main>
+    <h2>winkblue list</h2>
+    <ul id="winkblue-list" class="flex-list"></ul>
+    <h2>sentinel-js list</h2>
+    <ul id="sentinel-list" class="flex-list"></ul>
+  </main>
+  <script>
+  (() => {
+    const btnEl = document.getElementById('btn');
+    const flexListEls = Array.from(document.querySelectorAll('ul.flex-list'));
+    if(!btnEl || flexListEls.length === 0) { return; }
+
+    let i = 0;
+    btnEl.onclick = () => {
+      for (const flexListEl of flexListEls) {
+        flexListEl.insertAdjacentHTML('beforeend', `
+          <li>${String(i * 3 + 1).padStart(3, '0')}</li>
+          <li>${String(i * 3 + 2).padStart(3, '0')}</li>
+          <li>${String(i * 3 + 3).padStart(3, '0')}</li>
+        `)
+      }
+      i += 1;
+    }
+  })();
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "winkblue": "https://esm.sh/winkblue",
+        "sentinel": "https://esm.sh/sentinel-js"
+      }
+    }
+  </script>
+  <script type="module">
+    import sentinel from 'sentinel';
+
+    sentinel.on('ul#sentinel-list > li', (el) => {
+      const n = Array.from(el.parentElement.children).indexOf(el) + 1
+      if(n % 3 === 0) {
+        el.textContent = '';
+        el.classList.add('fizz');
+      }
+      if(n % 5 === 0) {
+        el.textContent = '';
+        el.classList.add('buzz');
+      }
+    });
+  </script>
+  <script type="module">
+    import winkblue from 'winkblue';
+
+    winkblue.on('ul#winkblue-list > li', (el) => {
+      const n = Array.from(el.parentElement.children).indexOf(el) + 1
+      console.log('winkblue', n)
+      if(n % 3 === 0) {
+        el.textContent = '';
+        el.classList.add('fizz');
+      }
+      if(n % 5 === 0) {
+        el.textContent = '';
+        el.classList.add('buzz');
+      }
+    });
+  </script>
+</body>
+</html>

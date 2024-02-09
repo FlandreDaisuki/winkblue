@@ -31,9 +31,16 @@ An DOM element detector which API compatible to [sentinel-js](https://github.com
 ## Usage
 
 ```js
+// Start observing elements by class
 winkblue.on('.dynamic-load-components', (el) => {
   // do something on `el`
 });
+
+// Stop observing elements by class
+winkblue.off('.dynamic-load-components');
+
+// Stop observing all elements
+winkblue.reset();
 ```
 
 ## Why?

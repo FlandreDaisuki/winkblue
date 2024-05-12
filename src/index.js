@@ -4,7 +4,7 @@ const mem = Object.create(null);
 export default {
   /**
    * @param {string} selector
-   * @param {(el: Element) => void} cb
+   * @param {(el: Element) => any} cb
    */
   on: function winkblueOn(selector, cb) {
     const wk = new WeakSet();
@@ -24,7 +24,7 @@ export default {
 
   /**
    * @param {string} selector
-   * @param {(el: Element) => void} [cb]
+   * @param {(el: Element) => any} [cb]
    */
   off: function winkblueOff(selector, cb) {
     const rSet = mem[selector];

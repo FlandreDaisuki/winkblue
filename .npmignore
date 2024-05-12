@@ -2,4 +2,9 @@
 *.tgz
 
 eslint.config.js
+vite.config.js
 tsconfig.json
+Makefile
+
+docs/
+src/

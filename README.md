@@ -9,7 +9,7 @@ An DOM element detector which API compatible to [sentinel-js](https://github.com
 ### CDN
 
 ```html
-<script src="https://unpkg.com/winkblue@0.0.5/dist/winkblue.umd.js"></script>
+<script src="https://unpkg.com/winkblue/dist/winkblue.umd.js"></script>
 ```
 
 ### CDN + ESM

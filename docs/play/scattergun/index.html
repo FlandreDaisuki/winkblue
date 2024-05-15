@@ -32,7 +32,7 @@
   <h1>Observe multiple <code>li</code> changes at once</h1>
   <p><a href="https://github.com/FlandreDaisuki/winkblue/blob/master/docs/play/scattergun/index.html">view source code</a></p>
   <div>
-    <button type="button" id="btn">Append a list item</button>
+    <button type="button" id="btn">Append 3 list items at the same time</button>
   </div>
   <main>
     <h2>winkblue list</h2>
@@ -71,7 +71,7 @@
     import sentinel from 'sentinel';
 
     sentinel.on('ul#sentinel-list > li', (el) => {
-      const n = Array.from(el.parentElement.children).indexOf(el) + 1
+      const n = Array.from(el.parentElement.children).indexOf(el) + 1;
       if(n % 3 === 0) {
         el.textContent = '';
         el.classList.add('fizz');
@@ -83,10 +83,10 @@
     });
   </script>
   <script type="module">
-    import winkblue from 'winkblue';
+    import { winkblue } from 'winkblue';
 
     winkblue.on('ul#winkblue-list > li', (el) => {
-      const n = Array.from(el.parentElement.children).indexOf(el) + 1
+      const n = Array.from(el.parentElement.children).indexOf(el) + 1;
       console.log('winkblue', n)
       if(n % 3 === 0) {
         el.textContent = '';

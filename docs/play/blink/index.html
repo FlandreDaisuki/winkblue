@@ -25,14 +25,16 @@
   </style>
 </head>
 <body>
-  <h1>Observe the same <code>li</code> DOM instance</h1>
+  <h1>Observe the same <code>li</code> DOM instance & with <code>forgetHiddenElement</code> option</h1>
   <p><a href="https://github.com/FlandreDaisuki/winkblue/blob/master/docs/play/blink/index.html">view source code</a></p>
   <div>
-    <button type="button" id="btn">Append a list item</button>
+    <button type="button" id="btn">Toggle a list item on document</button>
   </div>
   <main>
     <h2>winkblue list</h2>
     <ul id="winkblue-list" class="flex-list"></ul>
+    <h2>forgetful winkblue list</h2>
+    <ul id="forgetful-winkblue-list" class="flex-list"></ul>
     <h2>sentinel-js list</h2>
     <ul id="sentinel-list" class="flex-list"></ul>
   </main>
@@ -40,14 +42,19 @@
   (() => {
     const btnEl = document.getElementById('btn');
     const winkblueListEl = document.getElementById('winkblue-list');
+    const forgetfulWinkblueListEl = document.getElementById('forgetful-winkblue-list');
     const sentinelListEl = document.getElementById('sentinel-list');
-    if(!btnEl || !winkblueListEl || !sentinelListEl) { return; }
+    if(!btnEl || !winkblueListEl || !sentinelListEl || !forgetfulWinkblueListEl) { return; }
 
     winkblueListEl.insertAdjacentHTML('beforeend', `<li class="counter">0</li>`)
+    forgetfulWinkblueListEl.insertAdjacentHTML('beforeend', `<li class="counter">0</li>`)
     sentinelListEl.insertAdjacentHTML('beforeend', `<li class="counter">0</li>`)
 
     const winkblueListItemEl = document.createElement('li');
     winkblueListItemEl.textContent = 'Hello winkblue!';
+
+    const forgetfulWinkblueListItemEl = document.createElement('li');
+    forgetfulWinkblueListItemEl.textContent = 'Hello forgetful winkblue!';
 
     const sentinelListItemEl = document.createElement('li');
     sentinelListItemEl.textContent = 'Hello sentinel!';
@@ -57,6 +64,12 @@
         winkblueListItemEl.remove();
       } else {
         winkblueListEl.appendChild(winkblueListItemEl);
+      }
+
+      if(forgetfulWinkblueListEl.lastElementChild === forgetfulWinkblueListItemEl) {
+        forgetfulWinkblueListItemEl.remove();
+      } else {
+        forgetfulWinkblueListEl.appendChild(forgetfulWinkblueListItemEl);
       }
 
       if(sentinelListEl.lastElementChild === sentinelListItemEl) {
@@ -84,12 +97,23 @@
     });
   </script>
   <script type="module">
-    import winkblue from 'winkblue';
+    import { winkblue } from 'winkblue';
 
     winkblue.on('ul#winkblue-list > li:nth-child(2)', (el) => {
       const t = Number(el.previousElementSibling.textContent);
       el.previousElementSibling.textContent = t + 1
-    }, {memorize: false});
+    });
+  </script>
+  <script type="module">
+    import { Winkblue } from 'winkblue';
+
+    const forgetfulWinkblue = Winkblue.new();
+    forgetfulWinkblue.option.forgetHiddenElement = true;
+
+    forgetfulWinkblue.on('ul#forgetful-winkblue-list > li:nth-child(2)', (el) => {
+      const t = Number(el.previousElementSibling.textContent);
+      el.previousElementSibling.textContent = t + 1
+    });
   </script>
 </body>
 </html>

@@ -56,9 +56,9 @@
   <script type="importmap">
     {
       "imports": {
-        "winkblue1": "https://esm.sh/winkblue?t=1",
-        "sentinel1": "https://esm.sh/sentinel-js?t=1",
-        "winkblue2": "https://esm.sh/v135/winkblue@0.0.4/es2022/winkblue.mjs?t=2",
+        "winkblue1": "https://esm.sh/winkblue@0.1.0",
+        "sentinel1": "https://esm.sh/sentinel-js@0.0.7",
+        "winkblue2": "https://www.unpkg.com/winkblue@0.1.0/dist/winkblue.mjs",
         "sentinel2": "https://esm.sh/v135/sentinel-js@0.0.7/es2022/sentinel-js.mjs?t=2"
       }
     }
@@ -75,11 +75,11 @@
       el.classList.add('text-highlight');
     });
 
-    console.log(`sentinel1 === sentinel2`, sentinel1 === sentinel2)
+    console.log(`sentinel1 === sentinel2`, sentinel1 === sentinel2);
   </script>
   <script type="module">
-    import winkblue1 from 'winkblue1';
-    import winkblue2 from 'winkblue2';
+    import { winkblue as winkblue1 } from 'winkblue1';
+    import { winkblue as winkblue2 } from 'winkblue2';
 
     winkblue1.on('ul#winkblue-list > li:nth-child(even)', (el) => {
       el.classList.add('highlight');
@@ -89,7 +89,7 @@
       el.classList.add('text-highlight');
     });
 
-    console.log(`winkblue1 === winkblue2`, winkblue1 === winkblue2)
+    console.log(`winkblue1 === winkblue2`, winkblue1 === winkblue2);
   </script>
 </body>
 </html>

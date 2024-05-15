@@ -7,8 +7,9 @@ export default {
     rollupOptions: {
       output: [{
         format: 'umd',
-        name: 'winkblue',
+        name: 'Winkblue',
         entryFileNames: 'winkblue.umd.js',
+        exports: 'named',
       }, {
         format: 'esm',
         entryFileNames: 'winkblue.mjs',

@@ -1,33 +1,57 @@
-/** @type {Record<string, Set<{cb: Function; mo: MutationObserver}>>} */
-const mem = Object.create(null);
+export class Winkblue {
+  static new() {
+    return new Winkblue();
+  }
 
-export default {
+  constructor() {
+    /**
+     * @private
+     * @type {Record<string, Set<{cb: Function; mo: MutationObserver}>>}
+     */
+    this._internal_selector_mem = Object.create(null);
+
+    this.option = {
+      /** triggers callback if the element had been removed then attached back on document */
+      forgetHiddenElement: false,
+    };
+  }
+
   /**
    * @param {string} selector
    * @param {(el: Element) => any} cb
    */
-  on: function winkblueOn(selector, cb) {
-    const wk = new WeakSet();
+  on(selector, cb) {
+    const visitedElSet = new Set();
     const mo = new MutationObserver(() => {
-      for (const el of Array.from(document.querySelectorAll(selector))) {
-        if (el && !wk.has(el)) {
-          wk.add(el);
+      const visitingEls = Array.from(document.querySelectorAll(selector));
+
+      for (const el of visitingEls) {
+        if (el && !visitedElSet.has(el)) {
+          visitedElSet.add(el);
           setTimeout(() => cb(el), 0);
+        }
+      }
+
+      if (this.option.forgetHiddenElement) {
+        for (const el of visitedElSet) {
+          if (!visitingEls.includes(el)) {
+            visitedElSet.delete(el);
+          }
         }
       }
     });
     mo.observe(document.documentElement, { childList: true, subtree: true, attributes: true });
 
-    if (!mem[selector]) { mem[selector] = new Set(); }
-    mem[selector].add({ cb, mo });
-  },
+    if (!this._internal_selector_mem[selector]) { this._internal_selector_mem[selector] = new Set(); }
+    this._internal_selector_mem[selector].add({ cb, mo });
+  }
 
   /**
    * @param {string} selector
    * @param {(el: Element) => any} [cb]
    */
-  off: function winkblueOff(selector, cb) {
-    const rSet = mem[selector];
+  off(selector, cb) {
+    const rSet = this._internal_selector_mem[selector];
     if (!rSet) { return; }
 
     if (cb) {
@@ -43,15 +67,17 @@ export default {
         rSet.delete(r);
       }
     }
-  },
+  }
 
-  reset: function winkblueReset() {
-    for (const selector of Object.keys(mem)) {
-      const rSet = mem[selector];
+  reset() {
+    for (const selector of Object.keys(this._internal_selector_mem)) {
+      const rSet = this._internal_selector_mem[selector];
       for (const r of rSet) {
         r.mo.disconnect();
         rSet.delete(r);
       }
     }
-  },
-};
+  }
+}
+
+export const winkblue = Winkblue.new();

@@ -10,6 +10,17 @@ An DOM element detector which API compatible to [sentinel-js](https://github.com
 
 ```html
 <script src="https://unpkg.com/winkblue/dist/winkblue.umd.js"></script>
+<script>
+  const { winkblue } = Winkblue;
+
+  // or
+
+  const winkblue = new Winkblue.Winkblue();
+
+  // or
+
+  const winkblue = Winkblue.Winkblue.new();
+</script>
 ```
 
 ### CDN + ESM
@@ -24,7 +35,17 @@ An DOM element detector which API compatible to [sentinel-js](https://github.com
 </script>
 
 <script type="module">
-  import winkblue from 'winkblue';
+  import { winkblue } from 'winkblue';
+
+  // or
+
+  import { Winkblue } from 'winkblue';
+  const winkblue = new Winkblue();
+
+  // or
+
+  import { Winkblue } from 'winkblue';
+  const winkblue = Winkblue.new();
 </script>
 ```
 
@@ -43,6 +64,14 @@ winkblue.off('.dynamic-load-components');
 winkblue.reset();
 ```
 
+### options
+
+```js
+// triggers callback if the element had been removed then attached back on document
+// default: false
+winkblue.options.forgetHiddenElement = true;
+```
+
 ## Why?
 
 1. sentinel-js can not find the `display: none;` elements.
@@ -51,7 +80,7 @@ winkblue.reset();
 
 ## Limitation
 
-1. if you reuse the same element instance, the callback will not be triggered.
+1. if you reuse the same element instance, the callback will not be triggered unless you set `options.forgetHiddenElement` to `true`
 
 ## Playground
 

@@ -2,7 +2,7 @@
   "name": "winkblue",
   "type": "module",
   "version": "0.0.7",
-  "description": "",
+  "description": "A simple DOM observer",
   "author": "FlandreDaisuki <vbnm123c+github@gmail.com>",
   "license": "ISC",
   "keywords": [],

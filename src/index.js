@@ -74,9 +74,9 @@ export class Winkblue {
       const rSet = this._internal_selector_mem[selector];
       for (const r of rSet) {
         r.mo.disconnect();
-        rSet.delete(r);
       }
     }
+    this._internal_selector_mem = Object.create(null);
   }
 }
 
